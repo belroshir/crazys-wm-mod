@@ -478,22 +478,20 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 	girl->m_Tips = (int)tips;
 
 	// Improve stats
-	int xp = 10, libido = 1, skill = 3;
+	int I_xp = 10, I_libido = 1, skill = 3, I_fame = 1, I_intelligence = 0, I_agility = 0, I_service = 0;
 
-	if (g_Girls.HasTrait(girl, "Quick Learner"))		{ skill += 1; xp += 3; }
-	else if (g_Girls.HasTrait(girl, "Slow Learner"))	{ skill -= 1; xp -= 3; }
-	if (g_Girls.HasTrait(girl, "Nymphomaniac"))			{ libido += 2; }
+	if (g_Girls.HasTrait(girl, "Quick Learner"))		{ skill += 1; I_xp += 3; }
+	else if (g_Girls.HasTrait(girl, "Slow Learner"))	{ skill -= 1; I_xp -= 3; }
+	if (g_Girls.HasTrait(girl, "Nymphomaniac"))		{ I_libido += 2; }
 
-	int I_fame = 1 	g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
-	int I_xp = xp	g_Girls.UpdateStat(girl, STAT_EXP, xp);
-	int I_intelligence = 0
-	int I_agility = 0
+	g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
+	g_Girls.UpdateStat(girl, STAT_EXP, I_xp);
 	if (g_Dice % 2 == 1)
 		I_intelligence += 1;	g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, I_intelligence);
 	else
 		I_agility +=1;		g_Girls.UpdateStat(girl, STAT_AGILITY, I_agility);
-	int I_service = g_Dice%skill + 1	g_Girls.UpdateSkill(girl, SKILL_SERVICE, I_service);
-	g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, libido);
+	I_service = g_Dice%skill + 1;	g_Girls.UpdateSkill(girl, SKILL_SERVICE, I_service);
+	g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, I_libido);
 
 	//gain traits
 	g_Girls.PossiblyGainNewTrait(girl, "Charming", 70, actiontype, girlName + " has been flirting with customers to try to get better tips. Enough practice at it has made her quite Charming.", Day0Night1);
@@ -513,7 +511,8 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 			<< "\n Wages = " << (int)wages
 			<< "\n Tips = " << (int)tips
 			<< "\n Xp = " << I_xp
-			<< "\n Libido = " << libido
+			<< "\n Fame = " << I_fame
+			<< "\n Libido = " << I_libido
 			<< "\n Intelligence = " << I_intelligence
 			<< "\n Agility = " << I_agility
 			<< "\n Service = " << I_service
