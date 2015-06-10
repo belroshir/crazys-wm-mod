@@ -56,7 +56,7 @@ bool cJobManager::WorkBarmaid(sGirl* girl, sBrothel* brothel, bool Day0Night1, s
 	g_Girls.UnequipCombat(girl);	// put that shit away, you'll scare off the customers!
 
 	double wages = 15, tips = 0;
-	int work = 0;
+	int enjoy = 0;
 	int imagetype = IMGTYPE_WAIT;
 
 	int roll = g_Dice.d100();
@@ -391,13 +391,15 @@ bool cJobManager::WorkBarmaid(sGirl* girl, sBrothel* brothel, bool Day0Night1, s
 		}
 		else
 		{
-			ss << "So she over-charged them for drinks while they were too busy drooling to notice the price.\n"; wages += 15;
+			ss << "So she over-charged them for drinks while they were too busy drooling to notice the price.\n"; 
+			wages += 15;
 		}
 	}
 
 	if (g_Girls.HasTrait(girl, "Psychic") && g_Dice.percent(20))
 	{
-		ss << "She used her Psychic skills to know exactly what the patrons wanted to order and when to refill their mugs, keeping them happy and increasing tips.\n"; tips += 15;
+		ss << "She used her Psychic skills to know exactly what the patrons wanted to order and when to refill their mugs, keeping them happy and increasing tips.\n"; 
+		tips += 15;
 	}
 
 	if (g_Girls.HasTrait(girl, "Assassin") && g_Dice.percent(5))
@@ -528,45 +530,59 @@ bool cJobManager::WorkBarmaid(sGirl* girl, sBrothel* brothel, bool Day0Night1, s
 	//enjoyed the work or not
 	if (roll <= 5)
 	{
-		ss << "\nSome of the patrons abused her during the shift."; work -= 1;
+		ss << "\nSome of the patrons abused her during the shift."; enjoy -= 1;
 	}
 	else if (roll <= 25)
 	{
-		ss << "\nShe had a pleasant time working."; work += 3;
+		ss << "\nShe had a pleasant time working."; enjoy += 3;
 	}
 	else
 	{
-		ss << "\nOtherwise, the shift passed uneventfully."; work += 1;
+		ss << "\nOtherwise, the shift passed uneventfully."; enjoy += 1;
 	}
 
-	g_Girls.UpdateEnjoyment(girl, ACTION_WORKBAR, work);
+	g_Girls.UpdateEnjoyment(girl, ACTION_WORKBAR, enjoy);
 
 	girl->m_Events.AddMessage(ss.str(), IMGTYPE_WAIT, Day0Night1);
+	
+	//Money
 	int roll_max = (g_Girls.GetStat(girl, STAT_BEAUTY) + g_Girls.GetSkill(girl, SKILL_SERVICE));
 	roll_max /= 4;
 	wages += 10 + g_Dice%roll_max;
-	if (wages < 0) wages = 0;
-	if (tips < 0) tips = 0;
-	girl->m_Pay = (int)wages;
-	girl->m_Tips = (int)tips;
-
-
-	// Improve stats
+	if (wages < 0) wages = 0;	girl->m_Pay = (int)wages;
+	if (tips < 0) tips = 0;		girl->m_Tips = (int)tips;
+	// Base improvement and trait modifiers
 	int xp = 10, libido = 1, skill = 3;
-
 	if (g_Girls.HasTrait(girl, "Quick Learner"))		{ skill += 1; xp += 3; }
 	else if (g_Girls.HasTrait(girl, "Slow Learner"))	{ skill -= 1; xp -= 3; }
-	if (g_Girls.HasTrait(girl, "Nymphomaniac"))			{ libido += 2; }
+	if (g_Girls.HasTrait(girl, "Nymphomaniac"))		{ libido += 2; }
+	// EXP and Libido
+	int I_xp = (g_Dice % xp) + 1;			g_Girls.UpdateStat(girl, STAT_EXP, I_xp);
+	int I_libido = (g_Dice % libido) + 1;		g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, I_libido);
+	// primary stat gain (+2 for single, +1 for multiple)
+	int I_service = (g_Dice % skill) + 1;		g_Girls.UpdateSkill(girl, SKILL_SERVICE, I_service);
+	int I_fame = 1					g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
+	// Secondary stat gain (1 of 2 improves)
+	int I_intelligence = 0, I_performance = 0;
+	if (g_Dice % 2 == 1)	I_intelligence += 1;	g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, I_intelligence);
+	else			I_performance += 1;	g_Girls.UpdateSkill(girl, SKILL_PERFORMANCE, I_performance);
 
-	g_Girls.UpdateStat(girl, STAT_FAME, 1);
-	g_Girls.UpdateStat(girl, STAT_EXP, xp);
-	if (g_Dice % 2 == 1)
-		g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, g_Dice%skill);
-	else
-		g_Girls.UpdateSkill(girl, SKILL_PERFORMANCE, g_Dice%skill);
-	g_Girls.UpdateSkill(girl, SKILL_SERVICE, g_Dice%skill + 1);
-	g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, libido);
-
+	//Report numbers
+	if (cfg.debug.log_show_numbers())
+	{
+		ss << "\n\nNumbers:"
+			<< "\n Job Performance = " << (int)jobperformance
+			<< "\n Wages = " << (int)wages
+			<< "\n Tips = " << (int)tips
+			<< "\n Xp = " << I_xp
+			<< "\n Libido = " << I_libido
+			<< "\n Fame = " << I_fame
+			<< "\n Service = " << I_service
+			<< "\n Performance = " << I_performance
+			<< "\n Intelligence = " << I_intelligence
+			<< "\n Enjoy " << girl->enjoy_jobs[actiontype] << " = " << enjoy
+			;
+	}
 	//gain traits
 	g_Girls.PossiblyGainNewTrait(girl, "Charismatic", 60, ACTION_WORKBAR, "Dealing with customers at the bar and talking with them about their problems has made " + girlName + " more Charismatic.", Day0Night1);
 	if (jobperformance < 100 && roll <= 2) { g_Girls.PossiblyGainNewTrait(girl, "Assassin", 10, ACTION_WORKBAR, girlName + "'s lack of skill at mixing drinks has been killing people left and right making her into quite the Assassin.", Day0Night1); }

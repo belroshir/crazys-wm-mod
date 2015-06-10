@@ -62,7 +62,7 @@ bool cJobManager::WorkBarStripper(sGirl* girl, sBrothel* brothel, bool Day0Night
 	//int drinks;
 
 	double wages = 30, tips = 0;
-	int work = 0;
+	int enjoy = 0;
 
 	//what is she wearing?
 	if (g_Girls.HasItemJ(girl, "Rainbow Underwear") != -1)
@@ -445,45 +445,43 @@ bool cJobManager::WorkBarStripper(sGirl* girl, sBrothel* brothel, bool Day0Night
 	//enjoyed the work or not
 	if (roll <= 5)
 	{
-		ss << "\nSome of the patrons abused her during the shift."; work -= 1;
+		ss << "\nSome of the patrons abused her during the shift."; enjoy -= 1;
 	}
 	else if (roll <= 25)
 	{
-		ss << "\nShe had a pleasant time working."; work += 3;
+		ss << "\nShe had a pleasant time working."; enjoy += 3;
 	}
 	else
 	{
-		ss << "\nOtherwise, the shift passed uneventfully."; work += 1;
+		ss << "\nOtherwise, the shift passed uneventfully."; enjoy += 1;
 	}
 
 
-	g_Girls.UpdateEnjoyment(girl, actiontype, work);
+	g_Girls.UpdateEnjoyment(girl, actiontype, enjoy);
 	girl->m_Events.AddMessage(ss.str(), IMGTYPE_STRIP, Day0Night1);
 
-
+	//Money
 	int roll_max = (g_Girls.GetStat(girl, STAT_BEAUTY) + g_Girls.GetStat(girl, STAT_CHARISMA));
 	roll_max /= 4;
 	wages += 10 + g_Dice%roll_max;
-	if (wages < 0) wages = 0;
-	if (tips < 0) tips = 0;
-	girl->m_Pay = (int)wages;
-	girl->m_Tips = (int)tips;
-
-	// Improve stats
+	if (wages < 0) wages = 0;	girl->m_Pay = (int)wages;
+	if (tips < 0) tips = 0;		girl->m_Tips = (int)tips;
+	// Base gain and trait modifiers
 	int xp = 15, libido = 1, skill = 3;
-
 	if (g_Girls.HasTrait(girl, "Quick Learner"))		{ skill += 1; xp += 3; }
 	else if (g_Girls.HasTrait(girl, "Slow Learner"))	{ skill -= 1; xp -= 3; }
-	if (g_Girls.HasTrait(girl, "Nymphomaniac"))			{ libido += 2; }
+	if (g_Girls.HasTrait(girl, "Nymphomaniac"))		{ libido += 2; }
+	// EXP and Libido
+	int I_xp = (g_Dice % xp) + 1;		g_Girls.UpdateStat(girl, STAT_EXP, I_xp);
+	int I_libido = (g_Dice % libido) + 1;	g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, I_libido);
+	// Primary stat gain (+2 for single +1 for multiple)
+	int I_fame = 1;				g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
+	int I_strip = (g_Dice % skill) + 2;	g_Girls.UpdateSkill(girl, SKILL_STRIP, I_strip);
+	// Secondary stat gain (-1 for first, -2 for others)
+	int I_performance = max(0, (g_Dice % skill) - 1);	g_Girls.UpdateSkill(girl, SKILL_PERFORMANCE, I_performance)
+	int I_confidence = g_Dice % 2;				g_Girls.UpdateStatTemp(girl, STAT_CONFIDENCE, I_confidence); 
 
-	g_Girls.UpdateStat(girl, STAT_FAME, 1);
-	g_Girls.UpdateStat(girl, STAT_EXP, xp);
-	g_Girls.UpdateSkill(girl, SKILL_PERFORMANCE, g_Dice%skill);
-	g_Girls.UpdateSkill(girl, SKILL_STRIP, g_Dice%skill + 2);
-	g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, libido);
-	g_Girls.UpdateStatTemp(girl, STAT_CONFIDENCE, g_Dice % 2); //SIN - slow boost to confidence
-
-	//gained
+	//gained traits
 	g_Girls.PossiblyGainNewTrait(girl, "Sexy Air", 80, actiontype, girlName + " has been stripping and having to be sexy for so long she now reeks of sexyness.", Day0Night1);
 	g_Girls.PossiblyGainNewTrait(girl, "Exhibitionist", 60, actiontype, girlName + " has been stripping for so long she loves to be naked now.", Day0Night1);
 	if (jobperformance >= 140 && g_Dice.percent(25))
@@ -491,10 +489,26 @@ bool cJobManager::WorkBarStripper(sGirl* girl, sBrothel* brothel, bool Day0Night
 		g_Girls.PossiblyGainNewTrait(girl, "Agile", 40, actiontype, girlName + " has been working the pole long enough to become quite Agile.", Day0Night1);
 	}
 
-	//lose
+	//lose traits
 	g_Girls.PossiblyLoseExistingTrait(girl, "Nervous", 20, actiontype, girlName + " has had so many people see her naked she is no longer nervous about anything.", Day0Night1);
 	if (jobperformance > 150 && g_Girls.GetStat(girl, STAT_CONFIDENCE) > 65) { g_Girls.PossiblyLoseExistingTrait(girl, "Shy", 60, actiontype, girlName + " has been stripping for so long now that her confidence is super high and she is no longer Shy.", Day0Night1); }
 
+	//Report numbers
+	if (cfg.debug.log_show_numbers())
+	{
+		ss << "\n\nNumbers:"
+			<< "\n Job Performance = " << (int)jobperformance
+			<< "\n Wages = " << (int)wages
+			<< "\n Tips = " << (int)tips
+			<< "\n Xp = " << I_xp
+			<< "\n Fame = " << I_fame
+			<< "\n Stripping = " << I_strip
+			<< "\n Performance = " << I_performance
+			<< "\n Confidence = " << I_confidence
+			<< "\n Libido = " << I_libido
+			<< "\n Enjoy " << girl->enjoy_jobs[actiontype] << " = " << enjoy
+			;
+	}
 	return false;
 }
 double cJobManager::JP_BarStripper(sGirl* girl, bool estimate)// not used
