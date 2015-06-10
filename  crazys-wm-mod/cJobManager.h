@@ -64,6 +64,7 @@ public:
 	double	(*JobPerf[NUM_JOBS])(sGirl*, bool estimate);			// `J` a replacement for job performance - work in progress
 
 	string JobName[NUM_JOBS];  // short descriptive name of job
+	string JobQkNm[NUM_JOBS];  // a shorter name of job
 	string JobDesc[NUM_JOBS];  // longer description of job
 	string JobFilterName[NUMJOBTYPES];  // short descriptive name of job filter
 	string JobFilterDesc[NUMJOBTYPES];  // longer description of job filter
@@ -201,6 +202,8 @@ public:
 	static double JP_Blacksmith(sGirl* girl, bool estimate);
 	static bool WorkCobbler(sGirl* girl, sBrothel* brothel, bool Day0Night1, string& summary);
 	static double JP_Cobbler(sGirl* girl, bool estimate);
+	static bool WorkJeweler(sGirl* girl, sBrothel* brothel, bool Day0Night1, string& summary);
+	static double JP_Jeweler(sGirl* girl, bool estimate);
 	static bool WorkCleanArena(sGirl* girl, sBrothel* brothel, bool Day0Night1, string& summary);
 	static double JP_CleanArena(sGirl* girl, bool estimate);
 

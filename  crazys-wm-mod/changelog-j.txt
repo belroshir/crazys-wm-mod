@@ -2074,13 +2074,87 @@ Adding to jobs:
  
 !!!!!!!!!!!!!!!!!!!! pushed to GitHub
 
+###  Changes 5/27
+Updated J_1024x768 interface for town screen girl image and added a check in the code incase another interface is missing it.
+Added a hideimage check for town screen girl image when the walk script is finished.
 
+###  Changes 5/28-29
+Added Shop, Magic, Sign and Presented image types to scripts
+Updated more jobs: Farmer, 
+
+Added cfg.debug.log_show_numbers() with LogShowNumbers="true" in config.xml to show numbers gained in jobs.
+Added cfg.folders.preferdefault() with PreferDefault="true" in config.xml to allow default images to be preferred over the alternate image tree. (not used in the code yet)
+Updated Enjoyment list with cfg.debug.log_show_numbers()
+ - moved jobs[] out and renamed to sGirl::enjoy_jobs[]
+WME - added LogShowNumbers and PreferDefault to config settings
+
+Added g_Girls.GetBeast() to allow for easier beast insemination checks
+ - girl->calc_insemination(g_Girls.GetBeast(), 1);
+
+!!!!!!!!!!!!!!!!!!!! pushed to GitHub
+
+###  Changes 5/30
+Added sex texts by GonDra
+!!!!!!!!!!!!!!!!!!!! pushed to GitHub
+Updated Smoker addiction checks
+Added several Smoker items
+!!!!!!!!!!!!!!!!!!!! pushed to GitHub
+Fixed a minor bug in shop screen
+Fixed a bug with slider marker not allowing the game to start if "SliderMarker.png" is not found.
+ - It will use the "SliderButtonDisabled.png" instead.
+Because Milk will be produceable at the Farm, I am removing the Infinite="true" from all milk items.
+
+###  Changes 5/31
+WME - Fixed a bug with "GirlStatus" saving as "Status" breaking some items
+
+Changed WORKINTERN to WORKTRAINING to allow it to be used for any training job
+ - Fixed loading so it will accept either - saving will save the new WORKTRAINING
+Fixed a minor problem with girl_fights_girl if a girl does not show up for the fight
+Added traits: "City Girl", "Farmer", "Hunter"
+Added 13 items and fixed 3 from Hanzo
+Cleaned and fixed several items.
+Added in GonDra's new texts for Group and Lesbian sex.
+
+Updated more jobs: 
+ - Added Jeweler job to Arena
+ - Started dividing up job areas with  #pragma region - #pragma endregion
+ -  - I know it may throw some errors in editors not made by ms but it should not break it.
+ - Finished: Farmer, BeastCapture
+ - Mostly Finished: FarmMarketer, Milker
+ - Works but doesn't produce items yet: Blacksmith, Jeweler, MakeItem, Cobbler, Tailor
+ - Works with older item creation: Gardener, Research, MakePotions
+
+
+!!!!!!!!!!!!!!!!!!!! pushed to GitHub
+!!!!!!!!!!!!!!!!!!!! pushed Whore Master version .06.01.20
+!!!!!!!!!!!!!!!!!!!! pushed Whore Master Editor version 0.8.28
+
+###  Changes 6/1
+Fixed a few items descriptions.
+Fixed some typeos in do_daily_items
+Added a little more to WorkFarmMarketer, WorkFarmer, WorkBeastCapture, WorkButcher, WorkCatacombRancher, WorkCobbler
+GonDra fixed a few more things in the sex strings
+WME - changed defaults to ControlGirls="true" and ControlGangs="true" because both now work
+!!!!!!!!!!!!!!!!!!!! pushed to GitHub
+
+###  Changes 6/2
+WME - Fixed a bug where rgirls were not saving if missing "NPCLove" stat
+!!!!!!!!!!!!!!!!!!!! pushed Whore Master Editor version 0.8.29
+Fixed a bug in inventory screen where items selected are not recoreded until the buy button is pressed.
+Added cGameScript::Script_GetRandomGirl to allow scripts to randomly choose a girl from the Player's girls.
+!!!!!!!!!!!!!!!!!!!! pushed to GitHub
+!!!!!!!!!!!!!!!!!!!! pushed Whore Master version .06.01.21
+
+###  Changes 6/3
+Did a little cleaning to FarmHand and StageHand.
+Added previous job the girl was on before a matron sent her to free time
+ - Added JobQkNm[NUM_JOBS]; to be 3-4 character name for each job
+Added a few more places where the building that is active is set.
+!!!!!!!!!!!!!!!!!!!! pushed to GitHub
 
 
 
  
- 
-
 $$$$ TO DO - SHORT TERM - (for this version) $$$$
 Config.xml: 
  > Debug > ShowNumbers
@@ -2096,15 +2170,16 @@ $$$$ NOTE TO SELF - When updating items to recalculate stats/skills when loading
 $$$$ TO DO - SHORT TERM - (Soon) $$$$
 Make jobs load and save by name instead of number so adding new jobs will not break save games.
 
+
 $$$$ TO DO - MID TERM - (for the next few versions) $$$$
 Keep expanding on simple-save
 food and drink
-
 
 Make config in_fact and out_fact do something
 
 Change the way the game handles images
  - Instead of loading them all when the game loads, load them when they are needed.
+ - Make cfg.folders.preferdefault() work
 
 
 New Script Stuff:

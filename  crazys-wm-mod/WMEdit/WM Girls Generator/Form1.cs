@@ -555,6 +555,7 @@ namespace WM_Girls_Generator
                             case "Saves": textBox_Config_Folders_Savegames.Text = nv; break;
                             case "DefaultImages": textBox_Config_Folders_Default_Images.Text = nv; break;
                             case "BackupSaves": checkBox_Config_Folders_Backup_Saves.Checked = nvtf; break;
+                            case "PreferDefault": checkBox_Config_Folders_Prefer_Default.Checked = nvtf; break;
                         }
                     }
                 }
@@ -856,6 +857,7 @@ namespace WM_Girls_Generator
                             case "LogTorture": checkBox_config_LogTorture.Checked = nvtf; break;
                             case "LogDebug": checkBox_config_LogDebug.Checked = nvtf; break;
                             case "LogExtraDetails": checkBox_config_LogExtraDetails.Checked = nvtf; break;
+                            case "LogShowNumbers": checkBox_config_LogShowNumbers.Checked = nvtf; break;
                         }
                     }
                 }
@@ -898,7 +900,7 @@ namespace WM_Girls_Generator
             XmlElement xeFonts = xmldoc.CreateElement("Fonts");
             XmlElement xeDebug = xmldoc.CreateElement("Debug");
 
-            XmlComment xcFolders = xmldoc.CreateComment("\n\tCharacters     = The location of the Characters folder\n\tSaves          = The location of the Saves folder\n\tDefaultImages  = The location of the DefaultImages folder\n\t\t\tCurrently the folders are relative to the EXE file so to put the folder in the\n\t\t\t\tparent folder of the game, use  '..\\Characters'  and the like.\n\tBackupSaves    = 'true' or 'false'\n\t\t\tIf set to true, the game will save in both the game's default\n\t\t\t\tsave folder as well as the folder set here.\n\t");
+            XmlComment xcFolders = xmldoc.CreateComment("\n\tCharacters     = The location of the Characters folder\n\tSaves          = The location of the Saves folder\n\tDefaultImages  = The location of the DefaultImages folder\n\t\t\tCurrently the folders are relative to the EXE file so to put the folder in the\n\t\t\t\tparent folder of the game, use  '..\\Characters'  and the like.\n\tBackupSaves    = 'true' or 'false'\n\t\t\tIf set to true, the game will save in both the game's default\n\t\t\t\tsave folder as well as the folder set here.\n\tPreferDefault    = 'true' or 'false'\n\t\t\tIf set to true, the game will try to use default images\n\t\t\t\tbefore trying to find alternate images from the image tree.\n\t");
             XmlComment xcResolution = xmldoc.CreateComment("\n\tResolution     = the name of your interface folder\n\tWidth          = screen width\n\tHeight         = screen height\n\tScaleWidth     = screen scale width\n\tScaleHeight    = screen scale height\n\t\t\tThe old code of the game scaled all windows down to 800x600\n\t\t\tThis has been fixed but any old interfaces will not display correctly\n\t\t\t\tif the scale width and height are not set to 800x600.\n\tFullScreen     = 'true' or 'false'\n\tListScrollAmount = The number of lines to scroll in List boxes.\n\tTextScrollAmount = The number of lines to scroll in Text boxes.\n\t");
             XmlComment xcInitial = xmldoc.CreateComment("\n\tGold is how much gold you start the game with.\n\tGirlMeet is the %chance you'll meet a girl when walking around town.\n\tGirlsHousePerc and SlaveHousePerc is the default House Percentage for free girls and slave girls.\n\tGirlsKeepTips and GirlsKeepTips is whether they keep tips separate from house percent.\n\tSlavePayOutOfPocket is wether or not slave girls get paid by the player directly for certain jobs\n\t\tie. Cleaning, Advertising, Farming jobs, Film jobs, etc.\n\tAutoUseItems is whether or not the game will try to automatically use\n\t\tthe player's items intelligently on girls each week.\n\t\tThis feature needs more testing.\n\tAutoCombatEquip determines whether girls will automatically equip their best weapon and\n\t\tarmor for combat jobs and also automatically unequip weapon and armor for regular\n\t\tjobs where such gear would be considered inappropriate (i.e. whores-with-swords).\n\t\tSet to \"false\" to disable this feature.\n\n\tTortureTraitWeekMod affects multiplying the duration that they will\n\t\tkeep a temporary trait that they get from being tortured.\n\t\tIt is multiplied by the number of weeks in the dungeon.\n`J` added\t\tIf TortureTraitWeekMod is set to -1 then torture is harsher.\n\t\tThis doubles the chance of injuring the girls and doubles evil gain.\n\t\tDamage is increased by half. It also makes breaking the girls wills permanent.\n\t");
             XmlComment xcIncome = xmldoc.CreateComment("\n\tThese are the numbers that will multiply the money from various sources of income.\n\t\tSo setting \"GirlsWorkBrothel\" to \"0.5\" will reduce the cash your girls generate in the brothel by half.\n\t\tYou can also use numbers >1 to increase income if you are so inclined.\n\t");
@@ -912,7 +914,7 @@ namespace WM_Girls_Generator
             XmlComment xcGangs = xmldoc.CreateComment("\n\tGangs:\n\tMaxRecruitList limits the maximum number of recruitable gangs listed for you to hire.\n\t\tWARNING: BE CAREFUL here; the number of recruitable gangs plus the number of potential hired\n\t\t\tgangs must not exceed the number of names stored in HiredGangNames.txt.\n\t\tFor example, with 20 names, you could have a max of 12 recruitables since you have to\n\t\t\taccount for the possible 8 hired gangs.\n\tStartRandom is how many random recruitable gangs are created for you at the start of a new game.\n\tStartBoosted is how many stat-boosted starting gangs are also added.\n\tInitMemberMin and InitMemberMax indicate the number of initial gang members which are in each recruitable gang;\n\t\ta random number between Min and Max is picked.\n\tAddNewWeeklyMin and AddNewWeeklyMax indicate how many new random gangs are added to the recruitable\n\t\tgangs list each week; a random number between Min and Max is picked.\n\tChanceRemoveUnwanted is the %chance each week that each unhired gang in the recruitable list is removed.\n\t");
             XmlComment xcItems = xmldoc.CreateComment("\n\tItems:\n\t*** AutoCombatEquip was moved to Initial for .06. Kept here for .05 and earlier.\n\tColors are assigned to items listed on the item management screen by there rarity.\n\tThey are in RGB hex format, so #000000 is black and #FFFFFF is white.\n\t\tRarityColor0: Common\n\t\tRarityColor1: Appears in shop, 50% chance\n\t\tRarityColor2: Appears in shop, 25% chance\n\t\tRarityColor3: Appears in shop, 5% chance\n\t\tRarityColor4: Appears in catacombs, 15% chance\n\t\tRarityColor5: Only given by scripts\n\t\tRarityColor6: Given by scripts or as objective rewards\n\t\tRarityColor7: Appears in catacombs, 5% chance\n\t\tRarityColor8: Appears in catacombs, 1% chance\n\t");
             XmlComment xcFonts = xmldoc.CreateComment("\n\tFonts:\n\tNormal is the font that the game uses for text.\n\tFixed is for a monospaced font for tabular info but nothing currently uses that.\n\tShowPercent determines whether or not % is placed\n\t\tafter the number for stats and skills on the girl details list.\n\tAntialias determines whether font antialiasing (smoothing) is used.\n\n\tIt's worth leaving these in, since once the XML screen format is stable,\n\t\tit will be possible to set custom fonts for different text elements,\n\t\tjust like designing a web page.\n\tExcept that you'll have to distribute the font with the game or mod\n\t\trather than relying on the viewer to have it pre-installed.\n\t");
-            XmlComment xcLogging = xmldoc.CreateComment("\n\tHow much logging is needed?\n\t* They currently don't really work all that much but they will be improved.\n\t");
+            XmlComment xcDebug = xmldoc.CreateComment("\n\tHow much logging is needed?\n\t* They currently don't really work all that much but they will be improved.\n\t");
 
 
             xeConfig.AppendChild(xcFolders);
@@ -921,6 +923,8 @@ namespace WM_Girls_Generator
             xeFolders.SetAttribute("DefaultImages", textBox_Config_Folders_Default_Images.Text);
             if (checkBox_Config_Folders_Backup_Saves.Checked == true) xeFolders.SetAttribute("BackupSaves", "true");
             else xeFolders.SetAttribute("BackupSaves", "false");
+            if (checkBox_Config_Folders_Prefer_Default.Checked == true) xeFolders.SetAttribute("PreferDefault", "true");
+            else xeFolders.SetAttribute("PreferDefault", "false");
             xeConfig.AppendChild(xeFolders);
 
             xeConfig.AppendChild(xcResolution);
@@ -1079,7 +1083,7 @@ namespace WM_Girls_Generator
             if (checkBox_Config_Show_Percent.Checked == true) xeFonts.SetAttribute("ShowPercent", "true"); else xeFonts.SetAttribute("ShowPercent", "false");
             xeConfig.AppendChild(xeFonts);
 
-            xeConfig.AppendChild(xcLogging);
+            xeConfig.AppendChild(xcDebug);
             if (checkBox_config_LogAll.Checked == true) xeDebug.SetAttribute("LogAll", "true"); else xeDebug.SetAttribute("LogAll", "false");
             if (checkBox_config_LogGirls.Checked == true) xeDebug.SetAttribute("LogGirls", "true"); else xeDebug.SetAttribute("LogGirls", "false");
             if (checkBox_config_LogRGirls.Checked == true) xeDebug.SetAttribute("LogRGirls", "true"); else xeDebug.SetAttribute("LogRGirls", "false");
@@ -1089,6 +1093,7 @@ namespace WM_Girls_Generator
             if (checkBox_config_LogTorture.Checked == true) xeDebug.SetAttribute("LogTorture", "true"); else xeDebug.SetAttribute("LogTorture", "false");   // `J` added
             if (checkBox_config_LogDebug.Checked == true) xeDebug.SetAttribute("LogDebug", "true"); else xeDebug.SetAttribute("LogDebug", "false");   // `J` added
             if (checkBox_config_LogExtraDetails.Checked == true) xeDebug.SetAttribute("LogExtraDetails", "true"); else xeDebug.SetAttribute("LogExtraDetails", "false");   // `J` added
+            if (checkBox_config_LogShowNumbers.Checked == true) xeDebug.SetAttribute("LogShowNumbers", "true"); else xeDebug.SetAttribute("LogShowNumbers", "false");   // `J` added
             xeConfig.AppendChild(xeDebug);
 
             xmldoc.AppendChild(xeConfig);
@@ -1167,8 +1172,8 @@ namespace WM_Girls_Generator
             textBox_Config_ProstitutionRapeBrothel.Text = "1";
             textBox_Config_ProstitutionRapeStreets.Text = "5";
 
-            checkBox_Config_Control_Gangs.Checked = false;
-            checkBox_Config_Control_Girls.Checked = false;
+            checkBox_Config_Control_Gangs.Checked = true;
+            checkBox_Config_Control_Girls.Checked = true;
             trackBar_Config_Control_GirlsA.Value = 34;
             trackBar_Config_Control_GirlsB.Value = 67;
             trackBar_Config_Control_GangsA.Value = 34;
@@ -1226,6 +1231,8 @@ namespace WM_Girls_Generator
             checkBox_config_LogTorture.Checked = false;
             checkBox_config_LogDebug.Checked = false;
             checkBox_config_LogExtraDetails.Checked = false;
+            checkBox_config_LogShowNumbers.Checked = false;
+            
         }
         private void checkBox_config_LogAll_OthersChanged(object sender, EventArgs e)
         {
@@ -1241,6 +1248,7 @@ namespace WM_Girls_Generator
                 checkBox_config_LogTorture.Checked =
                 checkBox_config_LogDebug.Checked =
                 checkBox_config_LogExtraDetails.Checked =
+                checkBox_config_LogShowNumbers.Checked =
                 checkBox_config_LogAll.Checked;
                 LogAllCheckBoxes = false;
             }
@@ -1256,7 +1264,8 @@ namespace WM_Girls_Generator
                 checkBox_config_LogFonts.Checked &&
                 checkBox_config_LogTorture.Checked &&
                 checkBox_config_LogDebug.Checked &&
-                checkBox_config_LogExtraDetails.Checked)
+                checkBox_config_LogExtraDetails.Checked &&
+                checkBox_config_LogShowNumbers.Checked)
                     checkBox_config_LogAll.Checked = true;
                 else
                     checkBox_config_LogAll.Checked = false;
@@ -3743,8 +3752,16 @@ namespace WM_Girls_Generator
                 {
                     stat = xmldoc.CreateElement("Stat");
                     stat.SetAttribute("Name", sStats[statsortorder[y]]);
-                    stat.SetAttribute("Min", sMinStat[statsortorder[y]]);
-                    stat.SetAttribute("Max", sMaxStat[statsortorder[y]]);
+                    if (y >= sMinStat.Length)
+                    {
+                        stat.SetAttribute("Min", "0");
+                        stat.SetAttribute("Max", "0");
+                    }
+                    else
+                    {
+                        stat.SetAttribute("Min", sMinStat[statsortorder[y]]);
+                        stat.SetAttribute("Max", sMaxStat[statsortorder[y]]);
+                    }
                     girl.AppendChild(stat);
                 }
                 for (int y = 0; y < sSkills.Count(); y++)
@@ -3775,7 +3792,7 @@ namespace WM_Girls_Generator
 
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
-            settings.NewLineOnAttributes = true;
+            settings.NewLineOnAttributes = false;
             settings.IndentChars = "    ";
             XmlWriter xmlwrite = XmlWriter.Create(path, settings);
 
@@ -4442,7 +4459,7 @@ namespace WM_Girls_Generator
 
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
-                settings.NewLineOnAttributes = true;
+                settings.NewLineOnAttributes = false;
                 settings.IndentChars = "    ";
                 XmlWriter xmlwrite = XmlWriter.Create(filename, settings);
 
@@ -4748,7 +4765,7 @@ namespace WM_Girls_Generator
             string sEf02 = "";	//attribute
             string sEf03 = "";	//value
 
-            string[,] aTypes = new string[3, 2] { { "Skill", "0" }, { "Stat", "1" }, { "Status", "3" } };
+            string[,] aTypes = new string[3, 2] { { "Skill", "0" }, { "Stat", "1" }, { "GirlStatus", "3" } };
             string[,] aSkills = new string[22, 2] { { "Anal", "0" }, { "Magic", "1" }, { "BDSM", "2" }, { "Normal Sex", "3" }, { "Bestiality", "4" }, { "Group", "5" }, { "Lesbian", "6" }, { "Service", "7" }, { "Strip", "8" }, { "Combat", "9" }, { "OralSex", "10" }, { "TittySex", "11" }, { "Medicine", "12" }, { "Performance", "13" }, { "Handjob", "14" }, { "Crafting", "15" }, { "Herbalism", "16" }, { "Farming", "17" }, { "Brewing", "18" }, { "AnimalHandling", "19" }, { "Footjob", "20" } , { "Cooking", "21"}};
             string[,] aStats = new string[28, 2] { { "Charisma", "0" }, { "Happiness", "1" }, { "Libedo", "2" }, { "Constitution", "3" }, { "Intelligence", "4" }, { "Confidence", "5" }, { "Mana", "6" }, { "Agility", "7" }, { "Fame", "8" }, { "Level", "9" }, { "AskPrice", "10" }, { "House", "11" }, { "Experience", "12" }, { "Age", "13" }, { "Obedience", "14" }, { "Spirit", "15" }, { "Beauty", "16" }, { "Tiredness", "17" }, { "Health", "18" }, { "PC Fear", "19" }, { "PC Love", "20" }, { "PC Hate", "21" }, { "Morality", "22" }, { "Refinement", "23" }, { "Dignity", "24" }, { "Lactation", "25" }, { "Strength", "26" }, { "NPCLove", "27" } };
             string[,] aStatus = new string[13, 2] { { "Poisoned", "1" }, { "Badly Poisoned", "2" }, { "Pregnant", "3" }, { "Pregnant By Player", "4" }, { "Slave", "5" }, { "Has daughter", "6" }, { "Has son", "7" }, { "Inseminated", "8" }, { "Controlled", "9" }, { "Catacombs", "10" }, { "Arena", "11" }, { "Your Daughter", "12" }, { "Is Daughter", "13" } };
@@ -5170,7 +5187,7 @@ namespace WM_Girls_Generator
             string sEf02 = "";
             string sEf03 = "";
 
-            string[,] aTypes = new string[3, 2] { { "Skill", "0" }, { "Stat", "1" }, { "Status", "3" } };
+            string[,] aTypes = new string[3, 2] { { "Skill", "0" }, { "Stat", "1" }, { "GirlStatus", "3" } };
             string[,] aSkills = new string[22, 2] { { "Anal", "0" }, { "Magic", "1" }, { "BDSM", "2" }, { "Normal Sex", "3" }, { "Bestiality", "4" }, { "Group", "5" }, { "Lesbian", "6" }, { "Service", "7" }, { "Strip", "8" }, { "Combat", "9" }, { "OralSex", "10" }, { "TittySex", "11" }, { "Medicine", "12" }, { "Performance", "13" }, { "Handjob", "14" }, { "Crafting", "15" }, { "Herbalism", "16" }, { "Farming", "17" }, { "Brewing", "18" }, { "AnimalHandling", "19" }, { "Footjob", "20" }, { "Cooking","21"} };
             string[,] aStats = new string[28, 2] { { "Charisma", "0" }, { "Happiness", "1" }, { "Libedo", "2" }, { "Constitution", "3" }, { "Intelligence", "4" }, { "Confidence", "5" }, { "Mana", "6" }, { "Agility", "7" }, { "Fame", "8" }, { "Level", "9" }, { "AskPrice", "10" }, { "House", "11" }, { "Experience", "12" }, { "Age", "13" }, { "Obedience", "14" }, { "Spirit", "15" }, { "Beauty", "16" }, { "Tiredness", "17" }, { "Health", "18" }, { "PC Fear", "19" }, { "PC Love", "20" }, { "PC Hate", "21" }, { "Morality", "22" }, { "Refinement", "23" }, { "Dignity", "24" }, { "Lactation", "25" }, { "Strength", "26" }, { "NPCLove", "27" } };
             string[,] aStatus = new string[13, 2] { { "Poisoned", "1" }, { "Badly Poisoned", "2" }, { "Pregnant", "3" }, { "Pregnant By Player", "4" }, { "Slave", "5" }, { "Has daughter", "6" }, { "Has son", "7" }, { "Inseminated", "8" }, { "Controlled", "9" }, { "Catacombs", "10" }, { "Arena", "11" }, { "Your Daughter", "12" }, { "Is Daughter", "13" } };
@@ -6077,6 +6094,5 @@ namespace WM_Girls_Generator
              * and can probably be removed
              */
         }
-
    }
 }

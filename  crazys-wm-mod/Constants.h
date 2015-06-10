@@ -248,6 +248,7 @@ enum JOBS {
 	JOB_CITYGUARD,			//
 	JOB_BLACKSMITH,			//
 	JOB_COBBLER,			//
+	JOB_JEWELER,			//
 	JOB_CLEANARENA,			//
 	//const unsigned int JOB_BATTLEMASTER	= ;
 	//const unsigned int JOB_ARENAPROMOTER	= ;
@@ -517,7 +518,7 @@ const unsigned char ACTION_WORKSTRIP		= 23;
 const unsigned char ACTION_WORKMILK 		= 24;
 const unsigned char ACTION_WORKMASSUSSE		= 25;
 const unsigned char ACTION_WORKFARM			= 26;
-const unsigned char ACTION_WORKINTERN		= 27;
+const unsigned char ACTION_WORKTRAINING		= 27;
 const unsigned char ACTION_WORKREHAB		= 28;
 const unsigned char ACTION_WORKMAKEPOTIONS	= 29;
 const unsigned char ACTION_WORKMAKEITEMS	= 30;
