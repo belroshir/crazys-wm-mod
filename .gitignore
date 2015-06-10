@@ -1,5 +1,8 @@
+Debug/
+
 *.user
 *.vcxproj.user
 *.sdf
 *.v12.suo
 *.opensdf
+.gitattributes
