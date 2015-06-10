@@ -517,7 +517,7 @@ sInventoryItem* cInventory::GetRandomItem()
 sInventoryItem* cInventory::GetRandomCatacombItem()
 {
 	if (items.size() == 0)	return 0;
-	sInventoryItem *temp;
+	sInventoryItem *temp = NULL;
 	int index = g_Dice % (items.size() - 1);
 
 	int tries = items.size() / 3;	// try 1/3 of all items to get an item
@@ -525,24 +525,28 @@ sInventoryItem* cInventory::GetRandomCatacombItem()
 	{
 		if (tries % 10 == 0) index = g_Dice % (items.size() - 1);
 		if (index >= (int)items.size()) index = 0;
-		temp = items[index];
-		switch (temp->m_Rarity) {
-		case RARITYSHOP25:									return temp;	break;
-		case RARITYSHOP05:		if (g_Dice.percent(25))		return temp;	break;
-		case RARITYCATACOMB15:	if (g_Dice.percent(15))		return temp;	break;
-		case RARITYCATACOMB05:	if (g_Dice.percent(5))		return temp;	break;
-		case RARITYCATACOMB01:	if (g_Dice.percent(1))		return temp;	break;
-		case RARITYSCRIPTONLY:	
-		case RARITYSCRIPTORREWARD:	
-			temp = 0;
-			break;	// if at the end it is a script item, no item is returned
-		case RARITYCOMMON:	
-		case RARITYSHOP50: 
-		default: 
-			break;	// if at the end it is a common item, that item is returned
+		if (NULL != items[index])
+		{
+			temp = items[index];
+			switch (temp->m_Rarity) {
+			case RARITYSHOP25:									return temp;	break;
+			case RARITYSHOP05:		if (g_Dice.percent(25))		return temp;	break;
+			case RARITYCATACOMB15:	if (g_Dice.percent(15))		return temp;	break;
+			case RARITYCATACOMB05:	if (g_Dice.percent(5))		return temp;	break;
+			case RARITYCATACOMB01:	if (g_Dice.percent(1))		return temp;	break;
+			case RARITYSCRIPTONLY:
+			case RARITYSCRIPTORREWARD:
+				temp = 0;
+				break;	// if at the end it is a script item, no item is returned
+			case RARITYCOMMON:
+			case RARITYSHOP50:
+			default:
+				break;	// if at the end it is a common item, that item is returned
+			}
 		}
 		tries--;
 		index++;
+
 	} 
 	if (!temp) return 0;
 	return temp;
