@@ -490,7 +490,7 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 	// secondary improvement (1 of 2 improves)
 	int I_intelligence = 0, I_agility = 0;
 	if (g_Dice % 2 == 1)	I_intelligence += 1;		g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, I_intelligence);
-	else			I_agility +=1;			g_Girls.UpdateStat(girl, STAT_AGILITY, I_agility);
+	else			I_agility += 1;			g_Girls.UpdateStat(girl, STAT_AGILITY, I_agility);
 
 	//gain traits
 	g_Girls.PossiblyGainNewTrait(girl, "Charming", 70, actiontype, girlName + " has been flirting with customers to try to get better tips. Enough practice at it has made her quite Charming.", Day0Night1);
