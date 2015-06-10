@@ -60,7 +60,7 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 	string barmaidname = (barmaidonduty ? "Barmaid " + barmaidonduty->m_Realname + "" : "the Barmaid");
 
 	double wages = 15, tips = 0;
-	int work = 0;
+	int enjoy = 0;
 
 	int roll = g_Dice.d100();
 	double jobperformance = JP_BarWaitress(girl, false);
@@ -197,7 +197,7 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 		else if (roll <= 28)
 		{
 			ss << "Trying her best, " << girlName << " made few mistakes but otherwise she had a pleasant day.\n";
-			work += 1;
+			enjoy += 1;
 		}
 		else if (roll <= 42)
 		{
@@ -207,7 +207,7 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 		else if (roll <= 56)
 		{
 			ss << "Taking orders without mistakes and getting drinks to the tables not spilling a single drop from them. Today was a good day for " << girlName << ".\n";
-			work += 1;
+			enjoy += 1;
 		}
 		else if (roll <= 70)
 		{
@@ -455,43 +455,42 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 	//enjoyed the work or not
 	if (roll <= 5)
 	{
-		ss << "\nSome of the patrons abused her during the shift."; work -= 1;
+		ss << "\nSome of the patrons abused her during the shift."; enjoy -= 1;
 	}
 	else if (roll <= 25)
 	{
-		ss << "\nShe had a pleasant time working."; work += 3;
+		ss << "\nShe had a pleasant time working."; enjoy += 3;
 	}
 	else
 	{
-		ss << "\nOtherwise, the shift passed uneventfully."; work += 1;
+		ss << "\nOtherwise, the shift passed uneventfully."; enjoy += 1;
 	}
 
-	g_Girls.UpdateEnjoyment(girl, actiontype, work);
+	g_Girls.UpdateEnjoyment(girl, actiontype, enjoy);
 	girl->m_Events.AddMessage(ss.str(), imagetype, Day0Night1);
 
+	//Money
 	int roll_max = (g_Girls.GetStat(girl, STAT_BEAUTY) + g_Girls.GetStat(girl, STAT_CHARISMA));
 	roll_max /= 4;
 	wages += 10 + g_Dice%roll_max;
-	if (wages < 0) wages = 0;
-	if (tips < 0) tips = 0;
-	girl->m_Pay = (int)wages;
-	girl->m_Tips = (int)tips;
+	if (wages < 0) wages = 0;	girl->m_Pay = (int)wages;
+	if (tips < 0) tips = 0;		girl->m_Tips = (int)tips;
 
-	// Improve stats
-	int I_xp = 10, I_libido = 1, skill = 3, I_fame = 1, I_intelligence = 0, I_agility = 0, I_service = 0;
-
-	if (g_Girls.HasTrait(girl, "Quick Learner"))		{ skill += 1; I_xp += 3; }
-	else if (g_Girls.HasTrait(girl, "Slow Learner"))	{ skill -= 1; I_xp -= 3; }
-	if (g_Girls.HasTrait(girl, "Nymphomaniac"))		{ I_libido += 2; }
-
-	g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
-	g_Girls.UpdateStat(girl, STAT_EXP, I_xp);
-	if (g_Dice % 2 == 1)
-		I_intelligence += 1;	g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, I_intelligence);
-	else
-		I_agility +=1;		g_Girls.UpdateStat(girl, STAT_AGILITY, I_agility);
-	I_service = g_Dice%skill + 1;	g_Girls.UpdateSkill(girl, SKILL_SERVICE, I_service);
-	g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, I_libido);
+	// Base Improvement and trait modifiers
+	int xp = 10, libido = 1, skill = 3;
+	if (g_Girls.HasTrait(girl, "Quick Learner"))		{ skill += 1; xp += 3; }
+	else if (g_Girls.HasTrait(girl, "Slow Learner"))	{ skill -= 1; xp -= 3; }
+	if (g_Girls.HasTrait(girl, "Nymphomaniac"))		{ libido += 2; }
+	// EXP and Libido
+	int I_xp = (g_Dice % xp) + 1;				g_Girls.UpdateStat(girl, STAT_EXP, I_xp);
+	int I_libido = (g_Dice % libido) + 1;			g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, I_libido);
+	// primary improvement (+2 for single or +1 for multiple)
+	int I_service = (g_Dice % skill) + 1;			g_Girls.UpdateSkill(girl, SKILL_SERVICE, I_service);
+	int I_fame = 1						g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
+	// secondary improvement (-1 for one then -2 for others)
+	int I_intelligence = 0, I_agility = 0;
+	if (g_Dice % 2 == 1)	I_intelligence += 1;		g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, I_intelligence);
+	else			I_agility +=1;			g_Girls.UpdateStat(girl, STAT_AGILITY, I_agility);
 
 	//gain traits
 	g_Girls.PossiblyGainNewTrait(girl, "Charming", 70, actiontype, girlName + " has been flirting with customers to try to get better tips. Enough practice at it has made her quite Charming.", Day0Night1);
@@ -512,10 +511,10 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 			<< "\n Tips = " << (int)tips
 			<< "\n Xp = " << I_xp
 			<< "\n Fame = " << I_fame
-			<< "\n Libido = " << I_libido
+			<< "\n Service = " << I_service
 			<< "\n Intelligence = " << I_intelligence
 			<< "\n Agility = " << I_agility
-			<< "\n Service = " << I_service
+			<< "\n Libido = " << I_libido
 			<< "\n Enjoy " << girl->enjoy_jobs[actiontype] << " = " << enjoy
 			;
 	}
