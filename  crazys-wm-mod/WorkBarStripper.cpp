@@ -478,8 +478,10 @@ bool cJobManager::WorkBarStripper(sGirl* girl, sBrothel* brothel, bool Day0Night
 	int I_fame = 1;				g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
 	int I_strip = (g_Dice % skill) + 2;	g_Girls.UpdateSkill(girl, SKILL_STRIP, I_strip);
 	// Secondary stat gain (-1 for first, -2 for others)
-	int I_performance = max(0, (g_Dice % skill) - 1);	g_Girls.UpdateSkill(girl, SKILL_PERFORMANCE, I_performance)
-	int I_confidence = g_Dice % 2;				g_Girls.UpdateStatTemp(girl, STAT_CONFIDENCE, I_confidence); 
+	int I_performance = max(0, (g_Dice % skill) - 1);
+	g_Girls.UpdateSkill(girl, SKILL_PERFORMANCE, I_performance);
+	int I_confidence = g_Dice % 2;
+	g_Girls.UpdateStatTemp(girl, STAT_CONFIDENCE, I_confidence); 
 
 	//gained traits
 	g_Girls.PossiblyGainNewTrait(girl, "Sexy Air", 80, actiontype, girlName + " has been stripping and having to be sexy for so long she now reeks of sexyness.", Day0Night1);

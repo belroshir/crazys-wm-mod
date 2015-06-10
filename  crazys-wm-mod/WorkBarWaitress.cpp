@@ -482,15 +482,27 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 	else if (g_Girls.HasTrait(girl, "Slow Learner"))	{ skill -= 1; xp -= 3; }
 	if (g_Girls.HasTrait(girl, "Nymphomaniac"))		{ libido += 2; }
 	// EXP and Libido
-	int I_xp = (g_Dice % xp) + 1;				g_Girls.UpdateStat(girl, STAT_EXP, I_xp);
-	int I_libido = (g_Dice % libido) + 1;			g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, I_libido);
+	int I_xp = (g_Dice % xp) + 1;
+	g_Girls.UpdateStat(girl, STAT_EXP, I_xp);
+	int I_libido = (g_Dice % libido) + 1;
+	g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, I_libido);
 	// primary improvement (+2 for single or +1 for multiple)
-	int I_service = (g_Dice % skill) + 1;			g_Girls.UpdateSkill(girl, SKILL_SERVICE, I_service);
-	int I_fame = 1						g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
+	int I_service = (g_Dice % skill) + 1;
+	g_Girls.UpdateSkill(girl, SKILL_SERVICE, I_service);
+	int I_fame = 1;
+	g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
 	// secondary improvement (1 of 2 improves)
 	int I_intelligence = 0, I_agility = 0;
-	if (g_Dice % 2 == 1)	I_intelligence += 1;		g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, I_intelligence);
-	else			I_agility += 1;			g_Girls.UpdateStat(girl, STAT_AGILITY, I_agility);
+	if (g_Dice % 2 == 1)
+	{ 
+		I_intelligence += 1;
+		g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, I_intelligence); 
+	}
+	else
+	{ 
+		I_agility += 1;
+		g_Girls.UpdateStat(girl, STAT_AGILITY, I_agility);
+	}
 
 	//gain traits
 	g_Girls.PossiblyGainNewTrait(girl, "Charming", 70, actiontype, girlName + " has been flirting with customers to try to get better tips. Enough practice at it has made her quite Charming.", Day0Night1);

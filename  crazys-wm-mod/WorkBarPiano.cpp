@@ -343,14 +343,24 @@ bool cJobManager::WorkBarPiano(sGirl* girl, sBrothel* brothel, bool Day0Night1, 
 	else if (g_Girls.HasTrait(girl, "Slow Learner"))	{ skill -= 1; xp -= 3; }
 	if (g_Girls.HasTrait(girl, "Nymphomaniac"))			{ libido += 2; }
 
-	int I_fame = 1;						g_Girls.UpdateStat(girl, STAT_FAME, I_Fame);
-	int I_xp = xp;						g_Girls.UpdateStat(girl, STAT_EXP, xp);
+	int I_fame = 1;
+	g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
+	int I_xp = xp;
+	g_Girls.UpdateStat(girl, STAT_EXP, xp);
 	if (g_Dice % 2 == 1)
-		int I_confidence = g_Dice%skill			g_Girls.UpdateStat(girl, STAT_CONFIDENCE, g_Dice%skill);
+	{
+		int I_confidence = g_Dice%skill;
+		g_Girls.UpdateStat(girl, STAT_CONFIDENCE, g_Dice%skill);
+	}
 	else
-		int I_intelligence = g_Dice%skill		g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, g_Dice%skill);
-	int I_performance = g_Dice%skill + 1 			g_Girls.UpdateSkill(girl, SKILL_PERFORMANCE, g_Dice%skill + 1);
-	int I_libido = libido 					g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, libido);
+	{
+		int I_intelligence = g_Dice%skill;
+		g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, g_Dice%skill);
+	}
+	int I_performance = g_Dice%skill + 1;
+	g_Girls.UpdateSkill(girl, SKILL_PERFORMANCE, g_Dice%skill + 1);
+	int I_libido = libido;
+	g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, libido);
 
 	//gain traits
 	g_Girls.PossiblyGainNewTrait(girl, "Elegant", 75, ACTION_WORKMUSIC, "Playing the piano has given " + girlName + " an Elegant nature.", Day0Night1);
@@ -360,6 +370,9 @@ bool cJobManager::WorkBarPiano(sGirl* girl, sBrothel* brothel, bool Day0Night1, 
 
 	if (cfg.debug.log_show_numbers())
 	{
+		int I_confidence = 0;
+		int enjoy = 0;
+		int I_intelligence = 0;
 		ss << "\n\nNumbers:"
 			<< "\n Job Performance = " << (int)jobperformance
 			<< "\n Wages = " << (int)wages

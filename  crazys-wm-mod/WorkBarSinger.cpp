@@ -55,7 +55,7 @@ bool cJobManager::WorkBarSinger(sGirl* girl, sBrothel* brothel, bool Day0Night1,
 	g_Girls.UnequipCombat(girl); // put that shit away, you'll scare off the customers!
 
 	double wages = 20, tips = 0;
-	int work = 0, happy = 0, fame = 0 I_confidence = 0;
+	int work = 0, happy = 0, fame = 0, I_confidence = 0;
 	int roll = g_Dice.d100(), roll_a = g_Dice.d100();
 	double jobperformance = JP_BarSinger(girl, false);
 	
@@ -234,12 +234,20 @@ bool cJobManager::WorkBarSinger(sGirl* girl, sBrothel* brothel, bool Day0Night1,
 	else if (g_Girls.HasTrait(girl, "Slow Learner"))	{ skill -= 1; xp -= 3; }
 	if (g_Girls.HasTrait(girl, "Nymphomaniac"))			{ libido += 2; }
 
-	int I_fame = 1		g_Girls.UpdateStat(girl, STAT_FAME, 1);
-	int I_xp = xp		g_Girls.UpdateStat(girl, STAT_EXP, xp);
+	int I_fame = 1;
+	g_Girls.UpdateStat(girl, STAT_FAME, 1);
+	int I_xp = xp;
+	g_Girls.UpdateStat(girl, STAT_EXP, xp);
 	if (g_Dice % 2 == 1)
-		int I_confidence += g_Dice%skill + 1	g_Girls.UpdateStat(girl, STAT_CONFIDENCE, I_confidence);
-	int I_performance = g_Dice%skill + 1 		g_Girls.UpdateSkill(girl, SKILL_PERFORMANCE, g_Dice%skill + 1);
-	int I_libido = libido 				g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, libido);
+	{
+		I_confidence = g_Dice%skill + 1;
+	}
+	
+	g_Girls.UpdateStat(girl, STAT_CONFIDENCE, I_confidence);
+	int I_performance = g_Dice%skill + 1;
+	g_Girls.UpdateSkill(girl, SKILL_PERFORMANCE, g_Dice%skill + 1);
+	int I_libido = libido;
+	g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, libido);
 
 	//gain traits
 	g_Girls.PossiblyGainNewTrait(girl, "Charismatic", 70, actiontype, "Singing on a daily basis has made " + girlName + " more Charismatic.", Day0Night1);
@@ -251,6 +259,8 @@ bool cJobManager::WorkBarSinger(sGirl* girl, sBrothel* brothel, bool Day0Night1,
 	g_Girls.PossiblyLoseExistingTrait(girl, "Meek", 50, actiontype, girlName + "'s having to sing every day has forced her to get over her meekness.", Day0Night1);
 	
 	//Report numbers
+	int I_constitution = 0;
+	int enjoy = 0;
 	if (cfg.debug.log_show_numbers())
 	{
 		ss << "\n\nNumbers:"
@@ -277,7 +287,7 @@ double cJobManager::JP_BarSinger(sGirl* girl, bool estimate)// not used
 	if (g_Girls.HasTrait(girl, "Cute"))			jobperformance += 5;
 	if (g_Girls.HasTrait(girl, "Charming"))			jobperformance += 5;   //people like charming people	
 	if (g_Girls.HasTrait(girl, "Elegant"))			jobperformance += 5;
-	if (g_Girls.HasTrait(girl, "Quick Learner")		jobperformance += 5;
+	if (g_Girls.HasTrait(girl, "Quick Learner"))		jobperformance += 5;
 	if (g_Girls.HasTrait(girl, "Psychic"))			jobperformance += 10;  //knows what people want to hear
 	if (g_Girls.HasTrait(girl, "Fearless"))			jobperformance += 5;
 	if (g_Girls.HasTrait(girl, "Singer"))			jobperformance += 50;
