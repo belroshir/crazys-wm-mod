@@ -487,7 +487,7 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 	// primary improvement (+2 for single or +1 for multiple)
 	int I_service = (g_Dice % skill) + 1;			g_Girls.UpdateSkill(girl, SKILL_SERVICE, I_service);
 	int I_fame = 1						g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
-	// secondary improvement (-1 for one then -2 for others)
+	// secondary improvement (1 of 2 improves)
 	int I_intelligence = 0, I_agility = 0;
 	if (g_Dice % 2 == 1)	I_intelligence += 1;		g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, I_intelligence);
 	else			I_agility +=1;			g_Girls.UpdateStat(girl, STAT_AGILITY, I_agility);
