@@ -484,13 +484,17 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 	else if (g_Girls.HasTrait(girl, "Slow Learner"))	{ skill -= 1; xp -= 3; }
 	if (g_Girls.HasTrait(girl, "Nymphomaniac"))			{ libido += 2; }
 
-	g_Girls.UpdateStat(girl, STAT_FAME, 1);
-	g_Girls.UpdateStat(girl, STAT_EXP, xp);
+	int I_fame = 1 	g_Girls.UpdateStat(girl, STAT_FAME, I_fame);
+	int I_xp = xp	g_Girls.UpdateStat(girl, STAT_EXP, xp);
+	int I_intelligence = 0
+	int I_agility = 0
 	if (g_Dice % 2 == 1)
-		g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, 1);
+		I_intelligence += 1;
 	else
-		g_Girls.UpdateStat(girl, STAT_AGILITY, 1);
-	g_Girls.UpdateSkill(girl, SKILL_SERVICE, g_Dice%skill + 1);
+		I_agility +=1;
+	g_Girls.UpdateStat(girl, STAT_INTELLIGENCE, I_intelligence);
+	g_Girls.UpdateStat(girl, STAT_AGILITY, I_agility);
+	int I_service = g_Dice%skill + 1	g_Girls.UpdateSkill(girl, SKILL_SERVICE, I_service);
 	g_Girls.UpdateStatTemp(girl, STAT_LIBIDO, libido);
 
 	//gain traits
@@ -502,6 +506,22 @@ bool cJobManager::WorkBarWaitress(sGirl* girl, sBrothel* brothel, bool Day0Night
 
 	//lose traits
 	g_Girls.PossiblyLoseExistingTrait(girl, "Clumsy", 30, actiontype, "It took her breaking hundreds of dishes, and just as many reprimands, but " + girlName + " has finally stopped being so Clumsy.", Day0Night1);
+
+	//Report numbers
+	if (cfg.debug.log_show_numbers())
+	{
+		ss << "\n\nNumbers:"
+			<< "\n Job Performance = " << (int)jobperformance
+			<< "\n Wages = " << (int)wages
+			<< "\n Tips = " << (int)tips
+			<< "\n Xp = " << I_xp
+			<< "\n Libido = " << libido
+			<< "\n Intelligence = " << I_intelligence
+			<< "\n Agility = " << I_agility
+			<< "\n Service = " << I_service
+			<< "\n Enjoy " << girl->enjoy_jobs[actiontype] << " = " << enjoy
+			;
+	}
 	return false;
 }
 double cJobManager::JP_BarWaitress(sGirl* girl, bool estimate)// not used
