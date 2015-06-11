@@ -68,6 +68,42 @@
     <Filter Include="Jobs\Centre\Rehab">
       <UniqueIdentifier>{a7fe1ea1-4f0d-47f0-a7f7-53e55687a85f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Jobs\Clinic">
+      <UniqueIdentifier>{811c795a-148f-406e-ac2f-f715bec0e93e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\Clinic\Staff">
+      <UniqueIdentifier>{681e416c-cd30-49d3-8e14-8f5c71384175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\Clinic\Surgery">
+      <UniqueIdentifier>{272a6c79-0f39-4817-b462-f57669d97325}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\Farm">
+      <UniqueIdentifier>{77a09fbf-003a-4fb1-aee6-06e830fd66a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\Farm\Laborers">
+      <UniqueIdentifier>{1c012668-2356-444c-8c7f-d49c121dca2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\Farm\Producers">
+      <UniqueIdentifier>{9aebaefb-f07d-45df-b6fa-92a1e0094047}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\Farm\Staff">
+      <UniqueIdentifier>{03d3ec90-e3d6-4763-bc6d-e6a861fb71e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\House">
+      <UniqueIdentifier>{7f45665a-4bce-498f-bd8f-a2165ecca074}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\House\General">
+      <UniqueIdentifier>{ed5267d6-5da5-4283-ae1c-1f4804b93ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\Movie Studio">
+      <UniqueIdentifier>{70a303a5-796b-437c-a397-eb95c857aad7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\Movie Studio\Actress">
+      <UniqueIdentifier>{59150788-7eed-4015-bb98-3edf23ecf0d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Jobs\Movie Studio\Crew">
+      <UniqueIdentifier>{f1213ddf-cc89-4553-b558-4d34a8ad88ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cButton.cpp">
@@ -355,103 +391,7 @@
     <ClCompile Include="cJobManager.cpp">
       <Filter>Jobs</Filter>
     </ClCompile>
-    <ClCompile Include="WorkBeastCapture.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkCameraMage.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkChairMan.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkCleanHouse.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkCrystalPurifier.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkDoctor.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmAnal.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmBeast.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmBondage.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmDirector.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmGroup.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmLesbian.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmMast.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmOral.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmPromoter.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmSex.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmStagehand.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmStrip.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmTitty.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFluffer.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
     <ClCompile Include="WorkFreetime.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkGetAbort.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkHeadGirl.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkHealing.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkJanitor.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkMakeItem.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkMilk.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkNurse.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkPersonalBedWarmer.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkPersonalTraining.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkPhysicalSurgery.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkRecruiter.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkRepairShop.cpp">
       <Filter>Jobs</Filter>
     </ClCompile>
     <ClCompile Include="cLuaMenu.cpp">
@@ -500,91 +440,7 @@
     <ClCompile Include="cScreenPropertyManagement.cpp" />
     <ClCompile Include="cScreenNewGame.cpp" />
     <ClCompile Include="cScreenGallery.cpp" />
-    <ClCompile Include="WorkBaker.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkBoobJob.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkBreastReduction.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkBrewer.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkButcher.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkCatacombRancher.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFarmer.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFarmHand.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFarmManager.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFarmMarketer.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFarmResearch.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFarmVeterinarian.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmFootJob.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkFilmHandJob.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
     <ClCompile Include="WorkFilmRandom.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkGardener.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkGetAssJob.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkGetFacelift.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkGetFertility.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkGetTubesTied.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkGetVaginalRejuvenation.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkIntern.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkLiposuction.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkMakePotions.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkMechanic.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkMilker.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkRancher.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkShepherd.cpp">
-      <Filter>Jobs</Filter>
-    </ClCompile>
-    <ClCompile Include="WorkTailor.cpp">
       <Filter>Jobs</Filter>
     </ClCompile>
     <ClCompile Include="SDL_anigif.c">
@@ -721,6 +577,186 @@
     </ClCompile>
     <ClCompile Include="WorkRehab.cpp">
       <Filter>Jobs\Centre\Rehab</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkChairMan.cpp">
+      <Filter>Jobs\Clinic\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkDoctor.cpp">
+      <Filter>Jobs\Clinic\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkNurse.cpp">
+      <Filter>Jobs\Clinic\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkIntern.cpp">
+      <Filter>Jobs\Clinic\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkJanitor.cpp">
+      <Filter>Jobs\Clinic\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkBoobJob.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkBreastReduction.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkGetAbort.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkGetAssJob.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkGetFacelift.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkGetFertility.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkGetTubesTied.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkGetVaginalRejuvenation.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkHealing.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkLiposuction.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkPhysicalSurgery.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkRepairShop.cpp">
+      <Filter>Jobs\Clinic\Surgery</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkMechanic.cpp">
+      <Filter>Jobs\Clinic\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkBeastCapture.cpp">
+      <Filter>Jobs\Farm\Laborers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkCatacombRancher.cpp">
+      <Filter>Jobs\Farm\Laborers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFarmer.cpp">
+      <Filter>Jobs\Farm\Laborers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkGardener.cpp">
+      <Filter>Jobs\Farm\Laborers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkMilk.cpp">
+      <Filter>Jobs\Farm\Laborers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkMilker.cpp">
+      <Filter>Jobs\Farm\Laborers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkRancher.cpp">
+      <Filter>Jobs\Farm\Laborers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkShepherd.cpp">
+      <Filter>Jobs\Farm\Laborers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkBaker.cpp">
+      <Filter>Jobs\Farm\Producers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkBrewer.cpp">
+      <Filter>Jobs\Farm\Producers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkButcher.cpp">
+      <Filter>Jobs\Farm\Producers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkTailor.cpp">
+      <Filter>Jobs\Farm\Producers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkMakePotions.cpp">
+      <Filter>Jobs\Farm\Producers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkMakeItem.cpp">
+      <Filter>Jobs\Farm\Producers</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFarmHand.cpp">
+      <Filter>Jobs\Farm\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFarmManager.cpp">
+      <Filter>Jobs\Farm\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFarmMarketer.cpp">
+      <Filter>Jobs\Farm\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFarmResearch.cpp">
+      <Filter>Jobs\Farm\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFarmVeterinarian.cpp">
+      <Filter>Jobs\Farm\Staff</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkCleanHouse.cpp">
+      <Filter>Jobs\House\General</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkHeadGirl.cpp">
+      <Filter>Jobs\House\General</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkPersonalBedWarmer.cpp">
+      <Filter>Jobs\House\General</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkPersonalTraining.cpp">
+      <Filter>Jobs\House\General</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkRecruiter.cpp">
+      <Filter>Jobs\House\General</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmAnal.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmBeast.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmBondage.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmFootJob.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmGroup.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmHandJob.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmLesbian.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmMast.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmOral.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmSex.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmStrip.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmTitty.cpp">
+      <Filter>Jobs\Movie Studio\Actress</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkCameraMage.cpp">
+      <Filter>Jobs\Movie Studio\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkCrystalPurifier.cpp">
+      <Filter>Jobs\Movie Studio\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmDirector.cpp">
+      <Filter>Jobs\Movie Studio\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmPromoter.cpp">
+      <Filter>Jobs\Movie Studio\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFilmStagehand.cpp">
+      <Filter>Jobs\Movie Studio\Crew</Filter>
+    </ClCompile>
+    <ClCompile Include="WorkFluffer.cpp">
+      <Filter>Jobs\Movie Studio\Crew</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
