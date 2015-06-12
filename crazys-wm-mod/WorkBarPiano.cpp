@@ -394,51 +394,51 @@ double cJobManager::JP_BarPiano(sGirl* girl, bool estimate)// not used
 		g_Girls.GetSkill(girl, SKILL_PERFORMANCE));
 
 	//good traits
-	if (g_Girls.HasTrait(girl, "Charismatic"))	jobperformance += 10;
-	if (g_Girls.HasTrait(girl, "Sexy Air"))		jobperformance += 5;
-	if (g_Girls.HasTrait(girl, "Cool Person"))	jobperformance += 5;   //people love to be around her	
-	if (g_Girls.HasTrait(girl, "Cute"))		jobperformance += 5;
-	if (g_Girls.HasTrait(girl, "Charming"))		jobperformance += 5;   //people like charming people
-	if (g_Girls.HasTrait(girl, "Elegant"))		jobperformance += 15;  //Elegant people usally know how to play the piano lol
-	if (g_Girls.HasTrait(girl, "Quick Learner"))	jobperformance += 5;   //people like charming people
-	if (g_Girls.HasTrait(girl, "Psychic"))		jobperformance += 10;  //knows what people want to hear
-	if (g_Girls.HasTrait(girl, "Idol"))		jobperformance += 10;
-	if (g_Girls.HasTrait(girl, "Long Legs"))	jobperformance += 5;
-	if (g_Girls.HasTrait(girl, "Nerd"))		jobperformance += 5;
-	if (g_Girls.HasTrait(girl, "Playful Tail"))	jobperformance += 5;	// use it to help her play lol
-	if (g_Girls.HasTrait(girl, "Princess"))		jobperformance += 10;	//usally taught to play
-	if (g_Girls.HasTrait(girl, "Queen"))		jobperformance += 10;	//usally taught to play
-	if (g_Girls.HasTrait(girl, "Noble"))		jobperformance += 10;	//usally taught to play
-	if (g_Girls.HasTrait(girl, "Singer"))		jobperformance += 10;	//Would understand rythem
+	if (g_Girls.HasTrait(girl, "Charismatic"))			jobperformance += 10;
+	if (g_Girls.HasTrait(girl, "Sexy Air"))				jobperformance += 5;
+	if (g_Girls.HasTrait(girl, "Cool Person"))			jobperformance += 5;   //people love to be around her	
+	if (g_Girls.HasTrait(girl, "Cute"))					jobperformance += 5;
+	if (g_Girls.HasTrait(girl, "Charming"))				jobperformance += 5;   //people like charming people
+	if (g_Girls.HasTrait(girl, "Elegant"))				jobperformance += 15;  //Elegant people usally know how to play the piano lol
+	if (g_Girls.HasTrait(girl, "Quick Learner"))		jobperformance += 5;   //people like charming people
+	if (g_Girls.HasTrait(girl, "Psychic"))				jobperformance += 10;  //knows what people want to hear
+	if (g_Girls.HasTrait(girl, "Idol"))					jobperformance += 10;
+	if (g_Girls.HasTrait(girl, "Long Legs"))			jobperformance += 5;
+	if (g_Girls.HasTrait(girl, "Nerd"))					jobperformance += 5;
+	if (g_Girls.HasTrait(girl, "Playful Tail"))			jobperformance += 5;	// use it to help her play lol
+	if (g_Girls.HasTrait(girl, "Princess"))				jobperformance += 10;	//usally taught to play
+	if (g_Girls.HasTrait(girl, "Queen"))				jobperformance += 10;	//usally taught to play
+	if (g_Girls.HasTrait(girl, "Noble"))				jobperformance += 10;	//usally taught to play
+	if (g_Girls.HasTrait(girl, "Singer"))				jobperformance += 10;	//Would understand rythem
 
 
 	//bad traits
-	if (g_Girls.HasTrait(girl, "Dependant"))	jobperformance -= 50;  //needs others to do the job	
-	if (g_Girls.HasTrait(girl, "Aggressive"))	jobperformance -= 20;  //gets mad easy and may attack people
-	if (g_Girls.HasTrait(girl, "Nervous"))		jobperformance -= 30;  //don't like to be around people
-	if (g_Girls.HasTrait(girl, "Meek"))		jobperformance -= 20;
-	if (g_Girls.HasTrait(girl, "Broken Will"))	jobperformance -= 50;
-	if (g_Girls.HasTrait(girl, "Slow Learner"))	jobperformance -= 10;
-	if (g_Girls.HasTrait(girl, "Tone Deaf"))	jobperformance -= 75; //should never get good at this job
+	if (g_Girls.HasTrait(girl, "Dependant"))			jobperformance -= 50;  //needs others to do the job	
+	if (g_Girls.HasTrait(girl, "Aggressive"))			jobperformance -= 20;  //gets mad easy and may attack people
+	if (g_Girls.HasTrait(girl, "Nervous"))				jobperformance -= 30;  //don't like to be around people
+	if (g_Girls.HasTrait(girl, "Meek"))					jobperformance -= 20;
+	if (g_Girls.HasTrait(girl, "Broken Will"))			jobperformance -= 50;
+	if (g_Girls.HasTrait(girl, "Slow Learner"))			jobperformance -= 10;
+	if (g_Girls.HasTrait(girl, "Tone Deaf"))			jobperformance -= 75; //should never get good at this job
 
-	if (g_Girls.HasTrait(girl, "One Arm"))		jobperformance -= 30;
-	if (g_Girls.HasTrait(girl, "One Hand"))		jobperformance -= 15; 
-	if (g_Girls.HasTrait(girl, "No Arms"))		jobperformance -= 100;
-	if (g_Girls.HasTrait(girl, "No Feet"))		jobperformance -= 20;
-	if (g_Girls.HasTrait(girl, "No Hands"))		jobperformance -= 50;
-	if (g_Girls.HasTrait(girl, "No Legs"))		jobperformance -= 40;
-	if (g_Girls.HasTrait(girl, "Missing Finger"))	jobperformance -= 5;
-	if (g_Girls.HasTrait(girl, "Missing Fingers"))	jobperformance -= 15;
-	if (g_Girls.HasTrait(girl, "Blind"))		jobperformance -= 10;
-	if (g_Girls.HasTrait(girl, "Deaf"))		jobperformance -= 20;
-	if (g_Girls.HasTrait(girl, "Retarded"))		jobperformance -= 60;
-	if (g_Girls.HasTrait(girl, "Smoker"))		jobperformance -= 10;//would need smoke breaks
+	if (g_Girls.HasTrait(girl, "One Arm"))				jobperformance -= 30;
+	if (g_Girls.HasTrait(girl, "One Hand"))				jobperformance -= 15; 
+	if (g_Girls.HasTrait(girl, "No Arms"))				jobperformance -= 100;
+	if (g_Girls.HasTrait(girl, "No Feet"))				jobperformance -= 20;
+	if (g_Girls.HasTrait(girl, "No Hands"))				jobperformance -= 50;
+	if (g_Girls.HasTrait(girl, "No Legs"))				jobperformance -= 40;
+	if (g_Girls.HasTrait(girl, "Missing Finger"))		jobperformance -= 5;
+	if (g_Girls.HasTrait(girl, "Missing Fingers"))		jobperformance -= 15;
+	if (g_Girls.HasTrait(girl, "Blind"))				jobperformance -= 10;
+	if (g_Girls.HasTrait(girl, "Deaf"))					jobperformance -= 20;
+	if (g_Girls.HasTrait(girl, "Retarded"))				jobperformance -= 60;
+	if (g_Girls.HasTrait(girl, "Smoker"))				jobperformance -= 10;//would need smoke breaks
 
-	if (g_Girls.HasTrait(girl, "Alcoholic"))		jobperformance -= 25;
+	if (g_Girls.HasTrait(girl, "Alcoholic"))			jobperformance -= 25;
 	if (g_Girls.HasTrait(girl, "Fairy Dust Addict"))	jobperformance -= 25;
 	if (g_Girls.HasTrait(girl, "Shroud Addict"))		jobperformance -= 25;
 	if (g_Girls.HasTrait(girl, "Viras Blood Addict"))	jobperformance -= 25;
-	if (g_Girls.HasTrait(girl, "Cum Addict"))		jobperformance -= 5;
+	if (g_Girls.HasTrait(girl, "Cum Addict"))			jobperformance -= 5;
 
 
 
