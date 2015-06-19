@@ -92,14 +92,10 @@ cImageItem::cImageItem()
 }
 cImageItem::~cImageItem()
 {
-	if (m_Next)		delete m_Next;
-	m_Next = 0;
-	if (m_Image)	delete m_Image;
-	m_Image = 0;
-	if (m_Surface)	SDL_FreeSurface(m_Surface);
-	m_Surface = 0;
-	if (m_AnimatedImage)	delete m_AnimatedImage;
-	m_AnimatedImage = 0;
+	if (m_Next)				delete m_Next;					m_Next = 0;
+	if (m_Image)			delete m_Image;					m_Image = 0;
+	if (m_Surface)			SDL_FreeSurface(m_Surface);		m_Surface = 0;
+	if (m_AnimatedImage)	delete m_AnimatedImage;			m_AnimatedImage = 0;
 }
 
 /* `J` image tree for each image type
@@ -608,6 +604,14 @@ int TryImageType(int imagetype, int tries)
 void cInterfaceWindow::PrepareImage(int id, sGirl* girl, int imagetype, bool rand, int ImageNum, bool gallery, string ImageName)
 {
 	if (!girl)	return;	// no girl, no images
+	if (m_Images[id] &&
+		m_Images[id]->m_AnimatedImage &&
+		m_Images[id]->m_AnimatedImage->getNumFrames() > 0)
+	{
+		AG_FreeSurfaces(m_Images[id]->m_AnimatedImage->getAFrames(), m_Images[id]->m_AnimatedImage->getNumFrames());
+		m_Images[id]->m_AnimatedImage->m_Gif = false;
+		m_Images[id]->m_AnimatedImage = 0;
+	}
 	string girlName = girl->m_Name;
 
 	int dir = 0; DirPath usedir = "";
@@ -642,13 +646,9 @@ void cInterfaceWindow::PrepareImage(int id, sGirl* girl, int imagetype, bool ran
 		if (!girl->is_pregnant() && imagetype > IMGTYPE_PREGNANT)	imagetype -= PREG_OFFSET;
 	}
 
-	CSurface* image;
-	cAnimatedSurface* aimage = new cAnimatedSurface();
-	m_Images[id]->m_Image->m_Message = "";
 	string file = "";
 	string filename = "";
 	string ext = "";
-
 	
 	bool imagechosen = false;
 	do
@@ -696,6 +696,8 @@ void cInterfaceWindow::PrepareImage(int id, sGirl* girl, int imagetype, bool ran
 		}
 		if (dir == 0 && gallery)	// gallery stops here if there are no images
 		{
+			m_Images[id]->m_Image = new CSurface(ImagePath("blank.png"));
+			m_Images[id]->m_AnimatedImage = 0;
 			m_Images[id]->m_Image->m_Message = "No images found.";
 			break;
 		}
@@ -737,6 +739,8 @@ void cInterfaceWindow::PrepareImage(int id, sGirl* girl, int imagetype, bool ran
 		}
 		if (dir == 0)
 		{
+			m_Images[id]->m_Image = new CSurface(ImagePath("blank.png"));
+			m_Images[id]->m_AnimatedImage = 0;
 			m_Images[id]->m_Image->m_Message = "No images found.";
 			continue;
 		}
@@ -768,8 +772,7 @@ void cInterfaceWindow::PrepareImage(int id, sGirl* girl, int imagetype, bool ran
 			{
 				if (gallery)
 				{
-					image = new CSurface(ImagePath("blank.png"));
-					m_Images[id]->m_Image = image;
+					m_Images[id]->m_Image = new CSurface(ImagePath("blank.png"));
 					m_Images[id]->m_AnimatedImage = 0;
 					m_Images[id]->m_Image->m_Message = "Bad ani file: Missing its matching jpg file: " + file;
 					return;
@@ -789,8 +792,7 @@ void cInterfaceWindow::PrepareImage(int id, sGirl* girl, int imagetype, bool ran
 				g_LogFile.ss() << "Incorrect data file given for animation - " << file; g_LogFile.ssend();
 				if (gallery)
 				{
-					image = new CSurface(ImagePath("blank.png"));
-					m_Images[id]->m_Image = image;
+					m_Images[id]->m_Image = new CSurface(ImagePath("blank.png"));
 					m_Images[id]->m_AnimatedImage = 0;
 					m_Images[id]->m_Image->m_Message = "Bad ani file: Incorrect data file given for animation: " + file;
 					return;
@@ -799,7 +801,8 @@ void cInterfaceWindow::PrepareImage(int id, sGirl* girl, int imagetype, bool ran
 			else
 			{
 				input >> numFrames >> speed >> aniwidth >> aniheight;
-				aimage->SetData(0, 0, numFrames, speed, aniwidth, aniheight, newImage->m_Surface);
+				m_Images[id]->m_AnimatedImage = new cAnimatedSurface();
+				m_Images[id]->m_AnimatedImage->SetData(0, 0, numFrames, speed, aniwidth, aniheight, newImage->m_Surface);
 				imagechosen = true;
 				m_Images[id]->m_Image->m_Message = file;
 			}
@@ -808,13 +811,37 @@ void cInterfaceWindow::PrepareImage(int id, sGirl* girl, int imagetype, bool ran
 		}
 		else if (ext == "gif")
 		{
-			// temp code to just get it loaded
-			image = new CSurface(file);
-			imagechosen = true;
+ 			const char* n = file.c_str();
+			int frames = AG_LoadGIF(n, NULL, 0);
+			if (frames)
+			{
+				cImage* newImage = new cImage();
+				newImage->m_Surface = new CSurface();
+				newImage->m_Surface->LoadImage(file);
+				newImage->m_AniSurface = new cAnimatedSurface();
+
+				AG_Frame* gpAG = new AG_Frame[frames];
+				AG_LoadGIF(n, gpAG, frames);
+				AG_ConvertSurfacesToDisplayFormat(gpAG, frames);
+				
+				m_Images[id]->m_Image = newImage->m_Surface;
+				m_Images[id]->m_Image->m_Message = file;
+				m_Images[id]->m_AnimatedImage = new cAnimatedSurface();
+				m_Images[id]->m_AnimatedImage->SetGifData(0, 0, frames, gpAG, newImage->m_Surface);
+				imagechosen = true;
+
+			}
+			else	// if it does not read as a gif, just load it as a normal image
+			{
+				m_Images[id]->m_Image = new CSurface(file);
+				m_Images[id]->m_AnimatedImage = 0;
+				imagechosen = true;
+			}
 		}
 		else
 		{
-			image = new CSurface(file);
+			m_Images[id]->m_Image = new CSurface(file);
+			m_Images[id]->m_AnimatedImage = 0;
 			imagechosen = true;
 		}
 	}	while (!imagechosen && --tries > 0);
@@ -826,28 +853,10 @@ void cInterfaceWindow::PrepareImage(int id, sGirl* girl, int imagetype, bool ran
 
 	if (ext == "")	// unrecognised extension
 	{
-		image = new CSurface(ImagePath("blank.png"));
-		m_Images[id]->m_Image = image;
+		m_Images[id]->m_Image = new CSurface(ImagePath("blank.png"));
 		m_Images[id]->m_AnimatedImage = 0;
 		m_Images[id]->m_Image->m_Message = "No image found.";
 	}
-	else if (ext == "ani")
-	{
-		m_Images[id]->m_AnimatedImage = aimage;
-	}
-	else if (ext == "gif")
-	{
-		// temp code to just get it loaded
-		m_Images[id]->m_Image = image;
-		m_Images[id]->m_AnimatedImage = 0;
-	}
-	else
-	{
-		m_Images[id]->m_Image = image;
-		m_Images[id]->m_AnimatedImage = 0;
-	}
-
-
 }
 
 bool cImageItem::CreateImage(int id, string filename, int x, int y, int width, int height, bool statImage, int R, int G, int B)
@@ -915,16 +924,18 @@ bool cImageItem::CreateAnimatedImage(int id, string filename, string dataFilenam
 
 void cImageItem::Draw()
 {
-	if (m_Hidden)
-		return;
-
-	if (m_AnimatedImage)
+	if (m_Hidden) return;
+	
+	if (m_AnimatedImage && m_AnimatedImage->m_Gif)
 	{
 		SDL_Rect rect;
 		rect.y = rect.x = 0;
 		rect.w = m_Width;
 		rect.h = m_Height;
-
+		m_AnimatedImage->DrawGifFrame(m_XPos, m_YPos, m_Width, m_Height, g_Graphics.GetTicks());
+	}
+	else if (m_AnimatedImage)
+	{
 		m_AnimatedImage->DrawFrame(m_XPos, m_YPos, m_Width, m_Height, g_Graphics.GetTicks());
 	}
 	else if (m_Image)
@@ -933,7 +944,6 @@ void cImageItem::Draw()
 		rect.y = rect.x = 0;
 		rect.w = m_Width;
 		rect.h = m_Height;
-
 		m_Image->DrawSurface(m_XPos, m_YPos, 0, &rect, true);
 	}
 	else if (m_Surface)
